@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Days Revision Series — Polity Quiz 2</title>
+<style>
+  :root{
+    --navy:#0d1b3e;
+    --navy2:#132a5e;
+    --gold:#d4af37;
+    --gold-dim:#a9862a;
+    --cream:#f7f4ec;
+    --red:#c0392b;
+    --green:#1e7d4b;
+    --ink:#1a2036;
+    --muted:#6b7290;
+    --card:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #16265a 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 10%, #16265a 0%, transparent 55%),
+      var(--navy);
+    color:var(--ink);
+    font-family: 'Segoe UI', Inter, -apple-system, Arial, sans-serif;
+    min-height:100vh;
+  }
+  .display{font-family: Georgia, 'Times New Roman', serif;}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  ::selection{background:var(--gold);color:var(--navy);}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;color:#f2e9cf;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;}
+  .brand img{height:34px;width:34px;border-radius:50%;}
+
+  /* ---------- Shell / centered card ---------- */
+  .shell{max-width:1100px;margin:0 auto;padding:10px 18px 60px;}
+  .center-wrap{min-height:74vh;display:flex;align-items:center;justify-content:center;}
+  .panel{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 30px 70px rgba(0,0,0,.35);
+    width:100%;
+  }
+
+  /* ---------- Hero / landing ---------- */
+  .hero{
+    text-align:center;padding:40px 32px 34px;
+  }
+  .hero-logo{width:96px;height:96px;border-radius:50%;box-shadow:0 8px 24px rgba(0,0,0,.35);margin-bottom:14px;}
+  .eyebrow{
+    display:inline-block;color:var(--gold-dim);font-size:12px;letter-spacing:2.5px;
+    text-transform:uppercase;font-weight:700;margin-bottom:6px;
+  }
+  h1.title{
+    font-size:30px;margin:2px 0 4px;color:var(--navy);line-height:1.15;
+  }
+  h1.title span{color:var(--red);}
+  .subtitle{color:var(--muted);font-size:16px;margin-bottom:22px;}
+  .subtitle b{color:var(--navy2);}
+
+  .name-form{max-width:380px;margin:0 auto;text-align:left;}
+  .name-form label{font-size:13px;color:var(--muted);font-weight:600;}
+  .name-form input{
+    width:100%;padding:13px 14px;margin-top:6px;border-radius:10px;
+    border:1.5px solid #dfe2ec;font-size:15px;outline:none;
+  }
+  .name-form input:focus{border-color:var(--gold);}
+  .btn{
+    border:none;border-radius:10px;padding:13px 22px;font-weight:700;font-size:15px;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--navy);color:#fff;}
+  .btn-primary:hover{background:var(--navy2);box-shadow:0 8px 18px rgba(13,27,62,.35);}
+  .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-gold:hover{box-shadow:0 8px 18px rgba(212,175,55,.4);}
+  .btn-outline{background:#fff;border:1.5px solid var(--navy);color:var(--navy);}
+  .btn-outline:hover{background:#f1f3fb;}
+  .btn-red{background:var(--red);color:#fff;}
+  .btn-red:hover{box-shadow:0 8px 18px rgba(192,57,43,.35);}
+  .btn-block{width:100%;margin-top:16px;}
+  .btn-sm{padding:8px 14px;font-size:13px;border-radius:8px;}
+  .err{color:var(--red);font-size:13px;margin-top:8px;display:none;}
+
+  /* ---------- Set selection ---------- */
+  .sets-header{padding:30px 32px 6px;text-align:center;}
+  .greet{color:var(--navy2);font-weight:700;font-size:18px;}
+  .sets-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;padding:20px 32px 34px;
+  }
+  .set-card{
+    border:1.5px solid #e6e8f2;border-radius:14px;padding:18px;text-align:left;
+    background:linear-gradient(180deg,#fff,#fbfbfe);transition:.15s;position:relative;
+  }
+  .set-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 26px rgba(13,27,62,.12);}
+  .set-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--gold);
+    font-weight:800;font-size:14px;margin-bottom:10px;
+  }
+  .set-title{font-weight:700;color:var(--navy);font-size:16px;margin-bottom:2px;}
+  .set-meta{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+  .set-topics{font-size:11.5px;color:var(--gold-dim);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
+
+  /* ---------- Quiz layout ---------- */
+  .quiz-wrap{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start;}
+  @media(max-width:880px){.quiz-wrap{grid-template-columns:1fr;}}
+
+  .q-card{background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.28);padding:24px 26px;min-height:420px;display:flex;flex-direction:column;}
+  .q-topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .q-tag{background:#eef1fb;color:var(--navy2);font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:20px;}
+  .q-progress{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .q-number{font-size:12px;color:var(--gold-dim);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin:10px 0 4px;}
+  .q-text{font-size:18px;line-height:1.55;color:var(--ink);font-weight:600;margin-bottom:18px;}
+  .options{display:flex;flex-direction:column;gap:10px;flex:1;}
+  .opt{
+    display:flex;align-items:flex-start;gap:12px;border:1.6px solid #e4e7f1;border-radius:11px;
+    padding:12px 14px;cursor:pointer;transition:.12s;
+  }
+  .opt:hover{border-color:var(--gold);background:#fffdf5;}
+  .opt.selected{border-color:var(--navy);background:#eef1fb;}
+  .opt .tag{
+    flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1.6px solid #ccd1e4;
+    display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:var(--muted);
+  }
+  .opt.selected .tag{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .opt .otext{font-size:14.5px;line-height:1.5;padding-top:3px;}
+
+  /* review coloring */
+  .opt.correct{border-color:var(--green);background:#effaf3;}
+  .opt.correct .tag{background:var(--green);border-color:var(--green);color:#fff;}
+  .opt.wrong{border-color:var(--red);background:#fdf0ef;}
+  .opt.wrong .tag{background:var(--red);border-color:var(--red);color:#fff;}
+  .opt-expl{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px dashed #e1e4ef;color:var(--muted);line-height:1.5;}
+  .opt.correct .opt-expl{color:#1b6b41;}
+  .opt.wrong .opt-expl{color:#a8362a;}
+
+  .q-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap;}
+  .q-actions .left,.q-actions .right{display:flex;gap:8px;flex-wrap:wrap;}
+
+  /* ---------- Palette sidebar ---------- */
+  .side{background:#fff;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.28);padding:18px;}
+  .side h4{margin:0 0 10px;font-size:13px;color:var(--navy2);text-transform:uppercase;letter-spacing:.6px;}
+  .user-chip{display:flex;align-items:center;gap:10px;background:var(--navy);color:#f2e9cf;border-radius:12px;padding:10px 12px;margin-bottom:14px;}
+  .user-chip .av{width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+  .user-chip .info div:first-child{font-weight:700;font-size:13.5px;}
+  .user-chip .info div:last-child{font-size:11px;opacity:.8;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:var(--muted);margin-bottom:12px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .dot.notv{background:#e2e5f0;border:1px solid #c9cee3;}
+  .dot.ans{background:var(--green);}
+  .dot.notans{background:var(--red);}
+  .dot.review{background:#8a5ac0;}
+
+  .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:16px;}
+  .pnum{
+    aspect-ratio:1;border-radius:8px;border:none;background:#e2e5f0;color:#454b66;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;position:relative;
+  }
+  .pnum.ans{background:var(--green);color:#fff;}
+  .pnum.notans{background:var(--red);color:#fff;}
+  .pnum.review{background:#8a5ac0;color:#fff;}
+  .pnum.cur{outline:2.5px solid var(--gold);outline-offset:2px;}
+  .pnum.correctR{background:var(--green);color:#fff;}
+  .pnum.wrongR{background:var(--red);color:#fff;}
+  .pnum.skipR{background:#e2e5f0;color:#454b66;border:1.5px dashed #b9bfd8;}
+
+  .summary-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);padding:4px 0;border-bottom:1px dashed #eee;}
+  .summary-row b{color:var(--ink);}
+
+  /* ---------- Result screen ---------- */
+  .result-hero{
+    background:linear-gradient(135deg,var(--navy),#1b3a7a);color:#fff;border-radius:20px;padding:34px 30px;
+    text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);
+  }
+  .seal{
+    width:130px;height:130px;border-radius:50%;margin:0 auto 14px;
+    border:4px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 30% 20%, #1b3a7a, #0d1b3e);
+  }
+  .seal .score{font-size:32px;font-weight:800;color:var(--gold);}
+  .seal .outof{font-size:11px;color:#cdd6ee;}
+  .result-name{font-size:15px;color:#cdd6ee;margin-bottom:2px;}
+  .result-set{font-size:13px;color:#9fb0e0;margin-bottom:16px;}
+  .stat-row{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:10px;}
+  .stat{text-align:center;}
+  .stat .n{font-size:20px;font-weight:800;}
+  .stat .l{font-size:11px;color:#cdd6ee;text-transform:uppercase;letter-spacing:.5px;}
+  .stat.g .n{color:#7ee2a8;}
+  .stat.r .n{color:#f28b81;}
+  .stat.y .n{color:#f3d27a;}
+
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 4px;}
+  .fchip{border:1.5px solid #dfe2ec;background:#fff;border-radius:20px;padding:7px 14px;font-size:12.5px;font-weight:700;color:var(--muted);}
+  .fchip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .pill{padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:700;}
+  .pill.good{background:#e6f6ec;color:var(--green);}
+  .pill.mid{background:#fdf3e2;color:#b8860b;}
+  .pill.bad{background:#fdeceb;color:var(--red);}
+
+  .hidden{display:none !important;}
+  .footer-note{text-align:center;color:#aeb6d6;font-size:11.5px;margin-top:18px;}
+
+  @media(max-width:600px){
+    .hero{padding:28px 18px 22px;}
+    h1.title{font-size:22px;}
+    .q-card{padding:18px;}
+    .q-text{font-size:16px;}
+    .palette{grid-template-columns:repeat(5,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <span style="color:#f2e9cf;">Pakkirappa's CGL Hub</span>
+  </div>
+</div>
+
+<div class="shell" id="app"></div>
+
+<script>
+/* ============================================================
+   QUESTION DATA
+   Format per item: [examTag, questionText, [4 options], correctIndex(0-3), explanation]
+   ============================================================ */
+const PREAMBLE = [
+["SSC Steno, 08/08/2025, Shift-2","The Preamble to the Indian Constitution declares India to be a Sovereign, Socialist, Secular, Democratic Republic. Which of these terms were added to the Preamble by the 42nd Constitutional Amendment Act, 1976?",["Socialist, Secular","Sovereign, Democratic","Republic, Democratic","Justice, Liberty"],0,"The 42nd Constitutional Amendment Act, 1976, enacted during the Emergency, added three new words to the Preamble: Socialist, Secular, and Integrity. Before this, the description was 'Sovereign Democratic Republic'. This amendment is often called the 'Mini-Constitution' and the Preamble has been amended only this once."],
+["SSC CHSL, 14 Nov 2025, Shift-3","Which of the following words is mentioned in the preamble of the Indian constitution regarding 'Justice'?",["Secular","Socialist","Sovereign","Economic"],3,"The Preamble secures to all citizens Justice in three specific forms: Social, Economic, and Political. Secular, Socialist and Sovereign are adjectives describing the nature of the Indian State, not the types of Justice. The ideal of Justice (social, economic, political) was drawn from the Russian Revolution (1917)."],
+["Delhi Police Constable, 22 Dec 2025, Shift-2","What is the correct sequence of values, from first to last, as mentioned in the Preamble of the Indian Constitution?",["Justice, Equality, Liberty, Fraternity","Liberty, Justice, Equality, Fraternity","Equality, Liberty, Justice, Fraternity","Justice, Liberty, Equality, Fraternity"],3,"The Preamble lists the four foundational pillars in this exact sequence: Justice (social, economic, political), followed by Liberty (of thought, expression, belief, faith, worship), then Equality (of status and opportunity), and finally Fraternity (dignity of the individual, unity and integrity of the Nation)."],
+["Delhi Police Constable, 23 Dec 2025, Shift-2","Which of the following is incorrectly matched with its description from the Preamble?",["Sovereign - Independent in external and internal matters","Socialist - Promotes social equality","Democratic - Government elected by the people","Secular - Promotes one religion above others"],3,"'Secular' actually means the State has no official religion and treats all religions equally with equal respect — it does NOT promote any single religion above others (that would be a theocracy). Sovereign, Socialist and Democratic are all correctly matched with their constitutional meanings."]
+];
+
+const UT_CITIZENSHIP = [
+["Ssc phase 13, 28/07/2025","Which authority can alter the boundaries of Indian states?",["Supreme Court","State Legislative Assemblies","President of India","Parliament of India"],3,"Under Article 3, Parliament has the exclusive authority to form new states and alter the areas, boundaries or names of existing states, by a simple majority. The President must refer the bill to the concerned State Legislature for its views, but these views are not binding on Parliament — hence India is called 'an indestructible Union of destructible states'."],
+["Ssc phase 13, 29/07/2025","Whose death led to creation of the first linguistic state of India, Andhra Pradesh?",["Potti Sriramulu","Pingali Venkayya","R.K. Shanmugam Chetty","Jagjivan Ram"],0,"The death of Potti Sriramulu on 15 December 1952, after a 56-day hunger strike, triggered protests that forced the Government to create the first linguistic state; Andhra was carved out of Madras State on 1 October 1953. Sriramulu is revered as 'Amarajeevi' (Immortal Being). Pingali Venkayya designed the National Flag, unrelated to this fast."],
+["Ssc phase 13, 29/07/2025","Which of the following powers did Jammu and Kashmir have under Article 370?",["Its own Constitution","Separate flag","Decision-making in all matters except defence, foreign affairs, and communications","All of the above"],3,"Before its abrogation in August 2019, Article 370 granted J&K special autonomous status covering all of the above — a separate Constitution, a separate flag, and autonomy in internal administration except defence, foreign affairs, finance and communications. This 'temporary provision' in Part XXI was effectively nullified by the J&K Reorganisation Act, 2019."],
+["SSC Steno, 06/08/2025, Shift-2","What is the role of the Foreigners' Tribunal in the NRC (National Register of Citizens) process?",["To conduct the Census","To issue voter ID cards","To deport illegal immigrants","To verify citizenship claims of individuals excluded from the NRC"],3,"The Foreigners' Tribunals (quasi-judicial bodies unique to Assam) verify the citizenship claims of individuals excluded from the final NRC, letting them appeal to prove Indian citizenship. Deportation is a consequence of being declared a foreigner, not the Tribunal's role itself; Census and voter ID are handled by other bodies."],
+["SSC Steno, 08/08/2025, Shift-3","Which of the following pairs of newly created States/Union Territories after the States Reorganisation Act, 1956 is correctly matched?",["Jharkhand - 2001","Uttarakhand - 1998","Chhattisgarh - 2000","Telangana - 2001"],2,"Chhattisgarh was carved out of Madhya Pradesh on 1 November 2000. Jharkhand was actually created on 15 November 2000 (not 2001); Uttarakhand on 9 November 2000 (not 1998); Telangana on 2 June 2014 (not 2001). Chhattisgarh, Uttarakhand and Jharkhand were all created in the same year, 2000, under the NDA government led by Atal Bihari Vajpayee."],
+["SSC CGL Tier 1, 15 Sep 2025, Shift-2","Which Article defines State and Union Territories?",["Article 1","Article 3","Article 239","Article 240"],0,"Article 1 declares 'India, that is Bharat, shall be a Union of States' and defines India's territory as comprising the States, Union Territories and any other acquired territories — the foundational article defining the country's political units. Article 3 deals with formation of new states; Article 239 with UT administration; Article 240 with the President's regulation-making power for certain UTs."],
+["SSC CHSL, 13 Nov 2025, Shift-2","An Indian state can be divided or its boundary altered by which of the following?",["The State Legislature","Parliament","President","Supreme Court"],1,"The power to divide a state or alter its boundaries is vested exclusively in Parliament under Article 3, exercised by a simple majority. Though the President must refer the bill to the state legislature for its views, Parliament is not bound by them; states themselves cannot alter their own boundaries."],
+["SSC CHSL, 30 Nov 2025, Shift-3","Which of the following article of the Indian Constitution is related with Admission or establishment of new States?",["Article 2","Article 4","Article 8","Article 7"],0,"Article 2 relates to the admission or establishment of new states not currently part of the Union (e.g. admission of Sikkim), while Article 3 covers formation of new states from existing Indian territory. Article 4 allows laws under Articles 2 and 3 to pass by simple majority; Articles 7 and 8 relate to different matters (citizenship-related provisions), not admission of states."],
+["SSC CPO, 10 Dec 2025, Shift-2","Which Article empowers Parliament to alter state boundaries and form new states?",["Article 1","Article 2","Article 4","Article 3"],3,"Article 3 grants Parliament exclusive power to form new states, increase or diminish the area of any state, or alter the boundaries and names of existing states, by passing an ordinary law — showing the flexible nature of the Indian federation. Article 1 defines India as a Union of States; Article 2 deals with admission of new states from outside; Article 4 is a consequential/supplementary provision."],
+["Delhi Police Constable, 29 Dec 2025, Shift-3","Under which Article does Parliament have the power to create a new State or alter boundaries of existing States, with President's recommendation and potential ratification by States?",["Article 2","Article 4","Article 368","Article 3"],3,"Article 3 grants Parliament the exclusive, absolute power to reorganize India's political map — form new states, alter areas, or rename states — by simple majority. State legislatures can express views (via a Presidential reference) but their approval is not mandatory. Article 368 deals with constitutional amendments, a different and more rigid procedure."],
+["Delhi Police Constable, 31 Dec 2025, Shift-1","Establishment of 28th new state Jharkhand in India was executed in which of the following year?",["2001","2000","2010","2014"],1,"Jharkhand was carved out of the mineral-rich southern districts of Bihar on 15 November 2000, becoming the 28th state of India — created in the same year as Chhattisgarh (from Madhya Pradesh) and Uttarakhand (from Uttar Pradesh)."],
+["Delhi Police Constable, 02 Jan 2026, Shift-1","Andhra Pradesh was bifurcated to bring Telangana as 29th state of Indian constitution in which of the following year?",["2011","2012","2014","2018"],2,"Telangana was officially formed as India's 29th state on 2 June 2014, after Andhra Pradesh's bifurcation under the Andhra Pradesh Reorganisation Act, 2014. The demand was longstanding, but the legal formulation concluded only in 2014, not in 2011, 2012 or 2018."],
+["Delhi Police Constable, 02 Jan 2026, Shift-3","The 'Citizenship (Amendment) Act', 2019, aims to provide a fast-track to Indian citizenship for minorities from which three countries?",["Nepal, Bhutan, Myanmar","Afghanistan, Bangladesh, Pakistan","Sri Lanka, China, Nepal","Pakistan, Iraq, Iran"],1,"The CAA, 2019 amends the Citizenship Act, 1955 to provide an expedited citizenship pathway for persecuted religious minorities (Hindus, Sikhs, Buddhists, Jains, Parsis, Christians) who arrived before 31 Dec 2014 from three neighbouring Muslim-majority countries: Afghanistan, Bangladesh, and Pakistan — deliberately excluding migrants from Myanmar, Sri Lanka or Nepal."],
+["Delhi Police Constable, 20 Dec 2025, Shift-2","Which of the following is not permitted under Article 3 of the Constitution?",["Legislature's veto over state reorganisation","Increase in area of a state","Change of name of a state","Formation of a new state from a Union Territory"],0,"Article 3 gives Parliament absolute power to increase a state's area, change its name, or form a new state from existing territory (including a UT) — but it does NOT permit any State Legislature to exercise a binding 'veto'; the President must seek their views, but those views are strictly non-binding on Parliament."],
+["Delhi Police Constable, 22 Dec 2025, Shift-1","Who is the first Lieutenant Governor of the newly created Union Territory of Ladakh?",["B.D. Mishra","R.K. Mathur","Ghulam Ali Khatana","Satnam Singh Sandhu"],1,"Following the abrogation of Article 370 in 2019, Ladakh was carved out as a new Union Territory, and Radha Krishna Mathur (R.K. Mathur), a former Defence Secretary, was sworn in as its first Lieutenant Governor. Brigadier B.D. Mishra was appointed to the post later, in 2023. Ghulam Ali Khatana and Satnam Singh Sandhu are nominated Rajya Sabha members, unrelated to this role."],
+["Delhi Police Constable, 22 Dec 2025, Shift-1","Under which article is India described as a 'Union of States'?",["Article 1","Article 352","Article 368","Article 3"],0,"Article 1(1) explicitly states 'India, that is Bharat, shall be a Union of States' — clarifying that the Indian federation is not a breakable agreement among previously sovereign states, and that no state has a right to unilaterally secede. Article 352 deals with National Emergency; Article 368 with constitutional amendments; Article 3 with forming new states."],
+["Delhi Police Constable, 23 Dec 2025, Shift-2","Who appoints the officer for registering migrants as citizens?",["State Government","Supreme Court","President of India","Central government of India"],3,"Under the Citizenship Act, 1955 (and amendments like the CAA), the exclusive authority to grant citizenship, frame rules, and appoint officers to register eligible migrants as citizens lies with the Central Government (Ministry of Home Affairs) — Citizenship being a Union List subject, not handled by States, the Supreme Court or the President directly."],
+["Delhi Police Constable, 24 Dec 2025, Shift-1","Under the Indian Constitution, which Article empowers the Parliament to alter the boundaries of states without a state's consent?",["Article 3","Article 5","Article 6","Article 8"],0,"Article 3 grants Parliament supreme authority to form new states, increase/decrease a state's area, or alter boundaries and names. While the President must seek the state legislature's views before introducing the bill, Parliament is not bound by them — allowing it to proceed without the state's explicit consent."]
+];
+
+/* ============================================================
+   SETS DEFINITION (grouped by topic, not a fixed uniform size)
+   ============================================================ */
+const SETS = [
+  { label: "Preamble", data: PREAMBLE },
+  { label: "India & Its Territory, Citizenship", data: UT_CITIZENSHIP }
+];
+const TOTAL_SETS = SETS.length;
+const TOTAL_QUESTIONS = SETS.reduce((s,x)=>s+x.data.length,0);
+
+/* ============================================================
+   APP STATE
+   ============================================================ */
+let state = {
+  screen: "landing", // landing | sets | quiz | result
+  userName: "",
+  currentSet: null, // 0-indexed
+  questions: [], // sliced questions for current set
+  answers: {}, // qIndex(local) -> selectedOptionIndex
+  marked: {}, // qIndex(local) -> true
+  visited: {}, // qIndex(local) -> true
+  cur: 0,
+  resultFilter: "all" // all | correct | wrong | unattempted
+};
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function el(html){ const d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstChild; }
+function initials(name){ return name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+function letter(i){ return ["A","B","C","D"][i]; }
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   RENDER ROOT
+   ============================================================ */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  if(state.screen === 'landing') app.appendChild(renderLanding());
+  else if(state.screen === 'sets') app.appendChild(renderSets());
+  else if(state.screen === 'quiz') app.appendChild(renderQuiz());
+  else if(state.screen === 'result') app.appendChild(renderResult());
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------------- LANDING ---------------- */
+function renderLanding(){
+  const wrap = el(`<div class="center-wrap"><div class="panel" style="max-width:540px;">
+    <div class="hero">
+      <img class="hero-logo" alt="Pakkirappa's CGL Hub" style="background:radial-gradient(circle at 30% 30%, #16265a, #0d1b3e);">
+      <div class="eyebrow">Pakkirappa's CGL Hub &middot; Education For All</div>
+      <h1 class="title display">50 Days Revision Series<br><span>Polity Quiz 2</span></h1>
+      <div class="subtitle">Chapters: <b>Preamble, India &amp; Its Territory, Citizenship</b> &middot; ${TOTAL_QUESTIONS} Questions &middot; ${TOTAL_SETS} Sets</div>
+      <div class="name-form">
+        <label for="nameInput">Enter your name to begin</label>
+        <input id="nameInput" type="text" placeholder="e.g. Rahul Kumar" autocomplete="off">
+        <div class="err" id="nameErr">Please enter your name to continue.</div>
+        <button class="btn btn-primary btn-block" id="startBtn">Start Revision &rarr;</button>
+      </div>
+    </div>
+  </div></div>`);
+  const img = wrap.querySelector('img');
+  img.onerror = function(){ this.style.display='none'; };
+  img.src = "logo.jpg";
+  const input = wrap.querySelector('#nameInput');
+  const btn = wrap.querySelector('#startBtn');
+  const err = wrap.querySelector('#nameErr');
+  function go(){
+    const v = input.value.trim();
+    if(!v){ err.style.display='block'; input.focus(); return; }
+    state.userName = v;
+    state.screen = 'sets';
+    render();
+  }
+  btn.addEventListener('click', go);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter') go(); });
+  return wrap;
+}
+
+/* ---------------- SET SELECTION ---------------- */
+function renderSets(){
+  const wrap = el(`<div class="panel">
+    <div class="sets-header">
+      <div class="greet">Welcome, ${escapeHtml(state.userName)} 👋</div>
+      <div class="subtitle" style="margin-top:4px;">Choose a set to begin. Sets are grouped by topic.</div>
+    </div>
+    <div class="sets-grid" id="setsGrid"></div>
+  </div>`);
+  const grid = wrap.querySelector('#setsGrid');
+  SETS.forEach((s,idx)=>{
+    const card = el(`<div class="set-card">
+      <div class="set-num">${idx+1}</div>
+      <div class="set-title">Set ${idx+1} (${s.data.length} Questions)</div>
+      <div class="set-meta">Covers: SSC CGL / CHSL / MTS / CPO / Steno / Delhi Police</div>
+      <div class="set-topics">${escapeHtml(s.label)}</div>
+      <button class="btn btn-gold btn-sm" style="width:100%;">Attempt Set ${idx+1}</button>
+    </div>`);
+    card.querySelector('button').addEventListener('click', ()=> startSet(idx));
+    grid.appendChild(card);
+  });
+  return wrap;
+}
+
+function startSet(setIndex){
+  state.currentSet = setIndex;
+  state.questions = SETS[setIndex].data.map((d)=>({
+    tag:d[0], q:d[1], options:d[2], correct:d[3], expl:d[4]
+  }));
+  state.answers = {}; state.marked = {}; state.visited = {0:true}; state.cur = 0;
+  state.screen = 'quiz';
+  render();
+}
+
+/* ---------------- QUIZ ---------------- */
+function renderQuiz(){
+  const total = state.questions.length;
+  const q = state.questions[state.cur];
+  const answeredCount = Object.keys(state.answers).length;
+  const markedCount = Object.keys(state.marked).length;
+  const notVisited = total - Object.keys(state.visited).length;
+
+  const wrap = el(`<div>
+    <div class="quiz-wrap">
+      <div class="q-card">
+        <div class="q-topbar">
+          <span class="q-tag">${escapeHtml(q.tag)}</span>
+          <span class="q-progress">Question ${state.cur+1} of ${total} &middot; Set ${state.currentSet+1}: ${escapeHtml(SETS[state.currentSet].label)}</span>
+        </div>
+        <div class="q-number">Question ${state.cur+1}</div>
+        <div class="q-text">${escapeHtml(q.q)}</div>
+        <div class="options" id="optionsWrap"></div>
+        <div class="q-actions">
+          <div class="left">
+            <button class="btn btn-outline btn-sm" id="prevBtn" ${state.cur===0?'disabled style="opacity:.4;cursor:not-allowed;"':''}>&larr; Previous</button>
+            <button class="btn btn-outline btn-sm" id="clearBtn">Clear Response</button>
+          </div>
+          <div class="right">
+            <button class="btn btn-gold btn-sm" id="reviewBtn">${state.marked[state.cur] ? 'Unmark Review' : 'Mark for Review'}</button>
+            ${state.cur<total-1 ? '<button class="btn btn-primary btn-sm" id="nextBtn">Save & Next &rarr;</button>' : '<button class="btn btn-red btn-sm" id="submitBtn">Submit Quiz</button>'}
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="user-chip">
+          <div class="av">${escapeHtml(initials(state.userName))}</div>
+          <div class="info"><div>${escapeHtml(state.userName)}</div><div>Set ${state.currentSet+1} in progress</div></div>
+        </div>
+        <h4>Question Palette</h4>
+        <div class="legend">
+          <span><span class="dot ans"></span> Answered</span>
+          <span><span class="dot notans"></span> Not Answered</span>
+          <span><span class="dot review"></span> Marked for Review</span>
+          <span><span class="dot notv"></span> Not Visited</span>
+        </div>
+        <div class="palette" id="palette"></div>
+        <div class="summary-row"><span>Answered</span><b id="ansCount">${answeredCount}</b></div>
+        <div class="summary-row"><span>Marked for Review</span><b id="markCount">${markedCount}</b></div>
+        <div class="summary-row"><span>Not Visited</span><b id="notvCount">${notVisited}</b></div>
+        <button class="btn btn-red btn-block" id="submitBtnSide">Submit Quiz</button>
+      </div>
+    </div>
+  </div>`);
+
+  // options
+  const ow = wrap.querySelector('#optionsWrap');
+  q.options.forEach((optText, i)=>{
+    const optEl = el(`<div class="opt" data-i="${i}">
+      <div class="tag">${letter(i)}</div>
+      <div class="otext">${escapeHtml(optText)}</div>
+    </div>`);
+    if(state.answers[state.cur]===i) optEl.classList.add('selected');
+    optEl.addEventListener('click', ()=>{
+      state.answers[state.cur] = i;
+      render();
+    });
+    ow.appendChild(optEl);
+  });
+
+  // palette
+  const pal = wrap.querySelector('#palette');
+  for(let i=0;i<total;i++){
+    const btn = document.createElement('button');
+    btn.className = 'pnum';
+    btn.textContent = i+1;
+    if(state.marked[i]) btn.classList.add('review');
+    else if(state.answers[i]!==undefined) btn.classList.add('ans');
+    else if(state.visited[i]) btn.classList.add('notans');
+    if(i===state.cur) btn.classList.add('cur');
+    btn.addEventListener('click', ()=>{ state.visited[i]=true; state.cur=i; render(); });
+    pal.appendChild(btn);
+  }
+
+  wrap.querySelector('#prevBtn').addEventListener('click', ()=>{
+    if(state.cur>0){ state.cur--; state.visited[state.cur]=true; render(); }
+  });
+  const nextBtn = wrap.querySelector('#nextBtn');
+  if(nextBtn) nextBtn.addEventListener('click', ()=>{
+    if(state.cur<total-1){ state.cur++; state.visited[state.cur]=true; render(); }
+  });
+  wrap.querySelector('#clearBtn').addEventListener('click', ()=>{
+    delete state.answers[state.cur]; render();
+  });
+  wrap.querySelector('#reviewBtn').addEventListener('click', ()=>{
+    if(state.marked[state.cur]) delete state.marked[state.cur];
+    else state.marked[state.cur] = true;
+    if(state.cur<total-1){ state.cur++; state.visited[state.cur]=true; }
+    render();
+  });
+  const subBtn = wrap.querySelector('#submitBtn');
+  if(subBtn) subBtn.addEventListener('click', confirmSubmit);
+  wrap.querySelector('#submitBtnSide').addEventListener('click', confirmSubmit);
+
+  return wrap;
+}
+
+function confirmSubmit(){
+  const total = state.questions.length;
+  const unattempted = total - Object.keys(state.answers).length;
+  const msg = unattempted>0
+    ? `You have ${unattempted} unanswered question(s). Submit anyway?`
+    : `Submit your quiz now?`;
+  if(confirm(msg)) submitQuiz();
+}
+
+function submitQuiz(){
+  let correct=0, wrong=0;
+  state.questions.forEach((q,i)=>{
+    if(state.answers[i]===undefined) return;
+    if(state.answers[i]===q.correct) correct++; else wrong++;
+  });
+  const total = state.questions.length;
+  const unattempted = total - correct - wrong;
+  state.lastResult = {correct, wrong, unattempted, total};
+  state.resultFilter = 'all';
+  state.screen = 'result';
+  render();
+}
+
+/* ---------------- RESULT ---------------- */
+function renderResult(){
+  const total = state.questions.length;
+  const r = state.lastResult;
+  const pct = Math.round((r.correct/total)*100);
+
+  const wrap = el(`<div>
+    <div class="result-hero">
+      <div class="seal"><div class="score">${r.correct}/${total}</div><div class="outof">SCORE &middot; ${pct}%</div></div>
+      <div class="result-name">${escapeHtml(state.userName)}</div>
+      <div class="result-set">Set ${state.currentSet+1} — ${escapeHtml(SETS[state.currentSet].label)}</div>
+      <div class="stat-row">
+        <div class="stat g"><div class="n">${r.correct}</div><div class="l">Correct</div></div>
+        <div class="stat r"><div class="n">${r.wrong}</div><div class="l">Wrong</div></div>
+        <div class="stat y"><div class="n">${r.unattempted}</div><div class="l">Skipped</div></div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap" style="margin-top:18px;">
+      <div class="q-card" id="reviewCard"></div>
+      <div class="side">
+        <h4>Review Palette</h4>
+        <div class="legend">
+          <span><span class="dot ans"></span> Correct</span>
+          <span><span class="dot notans"></span> Wrong</span>
+          <span><span class="dot notv"></span> Skipped</span>
+        </div>
+        <div class="filter-bar" id="filterBar">
+          <button class="fchip active" data-f="all">All</button>
+          <button class="fchip" data-f="correct">Correct</button>
+          <button class="fchip" data-f="wrong">Wrong</button>
+          <button class="fchip" data-f="unattempted">Skipped</button>
+        </div>
+        <div class="palette" id="reviewPalette" style="margin-top:12px;"></div>
+        <button class="btn btn-outline btn-block" id="backSetsBtn">Back to Sets</button>
+        <button class="btn btn-primary btn-block" id="retakeBtn">Retake this Set</button>
+      </div>
+    </div>
+    <div class="footer-note">Keep revising — consistency wins the exam. 50 Days Revision Series by Pakkirappa's CGL Hub.</div>
+  </div>`);
+
+  state.reviewIdx = state.reviewIdx===undefined ? 0 : state.reviewIdx;
+
+  function statusOf(i){
+    if(state.answers[i]===undefined) return 'unattempted';
+    return state.answers[i]===state.questions[i].correct ? 'correct' : 'wrong';
+  }
+
+  function paintReview(){
+    const card = wrap.querySelector('#reviewCard');
+    const q = state.questions[state.reviewIdx];
+    const st = statusOf(state.reviewIdx);
+    card.innerHTML = '';
+    card.appendChild(el(`<div class="q-topbar">
+      <span class="q-tag">${escapeHtml(q.tag)}</span>
+      <span class="pill ${st==='correct'?'good':st==='wrong'?'bad':'mid'}">${st==='correct'?'Correct':st==='wrong'?'Incorrect':'Not Attempted'}</span>
+    </div>`));
+    card.appendChild(el(`<div class="q-number">Question ${state.reviewIdx+1}</div>`));
+    card.appendChild(el(`<div class="q-text">${escapeHtml(q.q)}</div>`));
+    const ow = el(`<div class="options"></div>`);
+    q.options.forEach((optText,i)=>{
+      const isCorrect = i===q.correct;
+      const isSelected = state.answers[state.reviewIdx]===i;
+      const cls = isCorrect ? 'correct' : (isSelected ? 'wrong' : '');
+      const optEl = el(`<div class="opt ${cls}">
+        <div class="tag">${letter(i)}</div>
+        <div style="flex:1;">
+          <div class="otext">${escapeHtml(optText)} ${isCorrect?'&nbsp;✓ Correct answer':''}${isSelected && !isCorrect?'&nbsp;✗ Your answer':''}</div>
+          <div class="opt-expl">${isCorrect ? '✓ Correct — '+escapeHtml(q.expl) : '✗ Incorrect — '+escapeHtml(q.expl)}</div>
+        </div>
+      </div>`);
+      ow.appendChild(optEl);
+    });
+    card.appendChild(ow);
+    const nav = el(`<div class="q-actions">
+      <div class="left"><button class="btn btn-outline btn-sm" id="rPrev">&larr; Previous</button></div>
+      <div class="right"><button class="btn btn-outline btn-sm" id="rNext">Next &rarr;</button></div>
+    </div>`);
+    card.appendChild(nav);
+    nav.querySelector('#rPrev').addEventListener('click', ()=>{
+      if(state.reviewIdx>0){ state.reviewIdx--; paintReview(); paintPalette(); }
+    });
+    nav.querySelector('#rNext').addEventListener('click', ()=>{
+      if(state.reviewIdx<total-1){ state.reviewIdx++; paintReview(); paintPalette(); }
+    });
+  }
+
+  function paintPalette(){
+    const pal = wrap.querySelector('#reviewPalette');
+    pal.innerHTML='';
+    for(let i=0;i<total;i++){
+      const st = statusOf(i);
+      if(state.resultFilter!=='all' && state.resultFilter!==st) continue;
+      const btn = document.createElement('button');
+      btn.className = 'pnum ' + (st==='correct'?'correctR':st==='wrong'?'wrongR':'skipR');
+      if(i===state.reviewIdx) btn.classList.add('cur');
+      btn.textContent = i+1;
+      btn.addEventListener('click', ()=>{ state.reviewIdx=i; paintReview(); paintPalette(); });
+      pal.appendChild(btn);
+    }
+  }
+
+  wrap.querySelectorAll('#filterBar .fchip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      wrap.querySelectorAll('#filterBar .fchip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      state.resultFilter = chip.dataset.f;
+      paintPalette();
+    });
+  });
+
+  wrap.querySelector('#backSetsBtn').addEventListener('click', ()=>{ state.screen='sets'; render(); });
+  wrap.querySelector('#retakeBtn').addEventListener('click', ()=>{ startSet(state.currentSet); });
+
+  paintReview();
+  paintPalette();
+  return wrap;
+}
+
+render();
+</script>
+</body>
+</html>
